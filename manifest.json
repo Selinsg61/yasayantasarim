@@ -1,0 +1,21 @@
+{
+  "name": "Yaşayan Tasarım Topluluğu",
+  "short_name": "Yaşayan Tasarım",
+  "description": "Yaşayan Tasarım Topluluğu Üye Kayıt Sistemi",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#2D8C73",
+  "theme_color": "#2D8C73",
+  "icons": [
+    {
+      "src": "icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+} 

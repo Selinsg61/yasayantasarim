@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yaşayan Tasarım Topluluğu</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#2D8C73">
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #2D8C73, #1A5F4E);
+            min-height: 100vh;
+            padding: 20px;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: white;
+            font-size: 2.5em;
+            margin: 20px 0;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        h1:hover {
+            transform: scale(1.05);
+        }
+        .info-section {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px auto;
+            max-width: 800px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: none;
+        }
+        .info-section.active {
+            display: block;
+        }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .social-links a {
+            color: #2D8C73;
+            text-decoration: none;
+            font-size: 2em;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        .social-links a span {
+            font-size: 0.4em;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+        .social-links a:hover {
+            color: #1A5F4E;
+            transform: translateY(-3px);
+        }
+        .register-link {
+            display: block;
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: linear-gradient(45deg, #2D8C73, #1A5F4E);
+            color: white;
+            text-decoration: none;
+            border-radius: 15px;
+            font-size: 1.2em;
+            transition: all 0.3s;
+        }
+        .register-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .register-link span {
+            display: block;
+            font-size: 0.8em;
+            margin-top: 5px;
+        }
+        .input-container {
+            margin-top: 30px;
+            display: flex;
+            gap: 10px;
+        }
+        input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+        button {
+            padding: 12px 25px;
+            background: #2D8C73;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #1A5F4E;
+        }
+        #taskList {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+        #taskList li {
+            padding: 15px;
+            margin: 10px 0;
+            background: #f8f8f8;
+            border-radius: 8px;
+            border-left: 4px solid #2D8C73;
+        }
+        .registration-form {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2D8C73;
+            font-weight: bold;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .radio-group label {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: #2D8C73;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .submit-btn:hover {
+            background: #1A5F4E;
+        }
+        .google-form-container {
+            width: 100%;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        .google-form-container iframe {
+            width: 100%;
+            border: none;
+            background: white;
+        }
+        .logo-container {
+            text-align: center;
+            margin: 20px auto;
+            max-width: 500px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+        }
+        .logo-container svg {
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+        .main-logo {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            transition: transform 0.3s ease;
+            max-width: 500px;
+        }
+        .main-logo:hover {
+            transform: scale(1.02);
+        }
+    </style>
+    <!-- Firebase SDK'larını ekleyelim -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <h1 onclick="toggleInfo()">YAŞAYAN TASARIM TOPLULUĞU</h1>
+
+    <div class="info-section" id="infoSection">
+        <h2 style="color: #2D8C73; text-align: center;">BİZ KİMİZ?</h2>
+        <div style="text-align: center; line-height: 1.6; margin-bottom: 20px;">
+            <h3 style="color: #2D8C73; margin-top: 20px;">Vizyon</h3>
+            <p>
+                Biz, Yaşayan Tasarım Topluluğu olarak, doğayla uyumlu ve sürdürülebilir peyzaj çözümleriyle 
+                yaşanabilir bir çevre yaratmayı hedefliyoruz. Doğanın gücünden ilham alarak, insanların ve 
+                doğanın birlikte var olabileceği harmonik mekanlar tasarlamak için çaba sarf ediyoruz.
+            </p>
+            
+            <h3 style="color: #2D8C73; margin-top: 20px;">Misyon</h3>
+            <p>
+                Yaşayan Tasarım Topluluğu olarak, doğal ve yapay unsurları bir araya getirerek estetik ve 
+                fonksiyonel peyzaj alanları oluşturmayı amaçlıyoruz. Bu doğrultuda, eğitim, bilinçlendirme 
+                ve uygulama faaliyetleri düzenleyerek öğrencilerin ve toplumun çevre bilinci ve peyzaj 
+                tasarımı konularında yetkinliklerini artırmayı hedefliyoruz. Ayrıca, yerel topluluklarla 
+                iş birliği yaparak sosyal sorumluluk projeleri gerçekleştiriyor, yaşanabilir bir çevre 
+                için farkındalık oluşturmayı amaçlıyoruz.
+            </p>
+        </div>
+        <div class="social-links">
+            <a href="https://instagram.com/yasayantasarim" target="_blank">
+                <i class="fab fa-instagram"></i>
+                <span>Instagram</span>
+            </a>
+            <a href="https://twitter.com/yasayantasarim" target="_blank">
+                <i class="fab fa-twitter"></i>
+                <span>Twitter</span>
+            </a>
+            <a href="https://linkedin.com/company/yasayan-tasarim" target="_blank">
+                <i class="fab fa-linkedin"></i>
+                <span>LinkedIn</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="registration-form">
+            <h2 style="color: #2D8C73; text-align: center; margin-bottom: 30px;">ÜYE KAYIT FORMU</h2>
+            <form id="memberForm" onsubmit="submitForm(event)">
+                <h3 style="color: #2D8C73; margin-top: 20px;">KİŞİSEL BİLGİLER</h3>
+                
+                <div class="form-group">
+                    <label for="nameSurname">1. Ad Soyad</label>
+                    <input type="text" id="nameSurname" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="studentId">2. Öğrenci No</label>
+                    <input type="text" id="studentId" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="department">3. Bölüm</label>
+                    <input type="text" id="department" required>
+                </div>
+
+                <div class="form-group">
+                    <label>4. Sınıf</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="class" value="1" required> 1</label>
+                        <label><input type="radio" name="class" value="2"> 2</label>
+                        <label><input type="radio" name="class" value="3"> 3</label>
+                        <label><input type="radio" name="class" value="4"> 4</label>
+                        <label><input type="radio" name="class" value="yuksek"> Yüksek Lisans</label>
+                        <label><input type="radio" name="class" value="doktora"> Doktora</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">5. E-posta Adresi</label>
+                    <input type="email" id="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">6. Telefon Numarası</label>
+                    <input type="tel" id="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="reason">7. Neden "Yaşayan Tasarım" topluluğuna katılmak istiyorsunuz?</label>
+                    <textarea id="reason" rows="4" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Başvuru Yap</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Firebase yapılandırması
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "yasayan-tasarim.firebaseapp.com",
+            databaseURL: "https://yasayan-tasarim-default-rtdb.firebaseio.com",
+            projectId: "yasayan-tasarim",
+            storageBucket: "yasayan-tasarim.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        // Firebase'i başlat
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // Form gönderme fonksiyonu
+        function toggleInfo() {
+            const infoSection = document.getElementById('infoSection');
+            infoSection.classList.toggle('active');
+        }
+        
+        function submitForm(event) {
+            event.preventDefault();
+            
+            const formData = {
+                adSoyad: document.getElementById('nameSurname').value,
+                ogrenciNo: document.getElementById('studentId').value,
+                bolum: document.getElementById('department').value,
+                sinif: document.querySelector('input[name="class"]:checked').value,
+                email: document.getElementById('email').value,
+                telefon: document.getElementById('phone').value,
+                neden: document.getElementById('reason').value
+            };
+            
+            const mailtoLink = `mailto:yasayantasarim@gmail.com?subject=Yeni Üye Başvurusu - ${formData.adSoyad}&body=
+KİŞİSEL BİLGİLER%0D%0A
+-------------------%0D%0A
+Ad Soyad: ${formData.adSoyad}%0D%0A
+Öğrenci No: ${formData.ogrenciNo}%0D%0A
+Bölüm: ${formData.bolum}%0D%0A
+Sınıf: ${formData.sinif}%0D%0A
+E-posta: ${formData.email}%0D%0A
+Telefon: ${formData.telefon}%0D%0A
+%0D%0A
+KATILIM NEDENİ%0D%0A
+--------------%0D%0A
+${formData.neden}`;
+
+            window.location.href = mailtoLink;
+            document.getElementById('memberForm').reset();
+            alert('Başvurunuz alındı. Lütfen açılan e-posta penceresinden başvurunuzu gönderin.');
+        }
+
+        // Service Worker kaydı
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful');
+                    })
+                    .catch(err => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
